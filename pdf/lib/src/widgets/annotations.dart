@@ -17,6 +17,7 @@
 import 'dart:math';
 
 import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter/material.dart';
 
 import '../../pdf.dart';
 import 'geometry.dart';
@@ -91,7 +92,7 @@ class AnnotationUrl extends AnnotationBuilder {
     this.destination, {
     this.date,
     this.subject,
-    this.author, 
+    this.author,
     this.onClick,
   });
 
@@ -435,7 +436,14 @@ class UrlLink extends Annotation {
     required Widget child,
     required String destination,
     void Function()? onClick,
-  }) : super(child: child, builder: AnnotationUrl(destination, onClick: onClick));
+  }) : super(
+            child: onClick == null
+                ? child
+                : GestureDetector(
+                    onTap: onClick,
+                    child: child,
+                  ),
+            builder: AnnotationUrl(destination, onClick: onClick));
 }
 
 class SquareAnnotation extends Annotation {

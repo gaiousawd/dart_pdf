@@ -91,12 +91,15 @@ class AnnotationUrl extends AnnotationBuilder {
     this.destination, {
     this.date,
     this.subject,
-    this.author,
+    this.author, 
+    this.onClick,
   });
 
   final String destination;
 
   final DateTime? date;
+
+  final void Function()? onClick;
 
   final String? author;
 
@@ -109,6 +112,7 @@ class AnnotationUrl extends AnnotationBuilder {
       PdfAnnotUrlLink(
         rect: context.localToGlobal(box!),
         url: destination,
+        // onClick: onClick,
         date: date,
         author: author,
         subject: subject,
@@ -430,7 +434,8 @@ class UrlLink extends Annotation {
   UrlLink({
     required Widget child,
     required String destination,
-  }) : super(child: child, builder: AnnotationUrl(destination));
+    void Function()? onClick,
+  }) : super(child: child, builder: AnnotationUrl(destination, onClick: onClick));
 }
 
 class SquareAnnotation extends Annotation {

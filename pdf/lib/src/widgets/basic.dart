@@ -18,6 +18,8 @@ import 'dart:math' as math;
 
 import 'package:vector_math/vector_math_64.dart';
 
+import 'package:flutter/material.dart' as mat;
+
 import '../../pdf.dart';
 import '../../widgets.dart';
 
@@ -296,7 +298,8 @@ class Align extends SingleChildWidget {
       {this.alignment = Alignment.center,
       this.widthFactor,
       this.heightFactor,
-      Widget? child})
+      Widget? child,
+      void Function()? onClick})
       : assert(widthFactor == null || widthFactor >= 0.0),
         assert(heightFactor == null || heightFactor >= 0.0),
         super(child: child);
@@ -451,9 +454,19 @@ class ConstrainedBox extends SingleChildWidget {
 }
 
 class Center extends Align {
-  Center({double? widthFactor, double? heightFactor, Widget? child})
+  Center(
+      {double? widthFactor,
+      double? heightFactor,
+      Widget? child,
+      void Function()? onClick})
       : super(
-            widthFactor: widthFactor, heightFactor: heightFactor, child: child);
+            widthFactor: widthFactor,
+            heightFactor: heightFactor,
+            child: onClick == null ? child: mat.GestureDetector(
+              onTap: onClick,
+              child: child,
+            ),
+            onClick: onClick);
 }
 
 /// Scales and positions its child within itself according to [fit].
